@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-require_once 'data.php';
-require_once 'utils.php';
-require_once 'template.php';
 
-page_header("Home");
-?>
-
-<ul>
-<?php
-foreach ($MACHINES as $id => $info) {
-	?><li><?php echo make_link($id, 'machine.php', [ 'id' => $id]) ?></li>
-<?php
+/**
+ * Creates HTML link.
+ * 
+ * Example: to create <a href="machine.php?id=alpha&style=blue">Alpha</a>, call
+ * make_link("Alpha", "machine.php", [ "id" => "alpha", "style" => "blue" ]);
+ * 
+ * @param $text The clickable text of the link.
+ * @param $page Target page.
+ * @param $params Array of query parameters for the page.
+ */
+function make_link($text, $page, $params) {
+    $p = array();
+    foreach ($params as $key => $value) {
+        $p[] = $key . '=' . $value;
+    }
+    return sprintf('<a href="%s?%s">%s</a>', $page, implode('&amp;', $p), $text);
 }
-?>
-</ul>
-
-<?php
-page_footer();

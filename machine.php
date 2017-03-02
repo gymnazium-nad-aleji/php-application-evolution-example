@@ -23,6 +23,7 @@
  */
 
 require_once 'data.php';
+require_once 'utils.php';
 require_once 'template.php';
 
 /*
@@ -50,9 +51,9 @@ page_header($id);
     </tr>
 <?php foreach ($info['services'] as $srv => $details) { ?>
     <tr>
-        <td><a href="service.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>"><?php echo $details['description']; ?></a></td>
+        <td><?php echo make_link($details['description'], 'service.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
         <td><?php echo $details['state']; ?></td>
-        <td><a href="events.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>">View event log</a></td>
+        <td><?php echo make_link('View event log', 'events.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
     </tr>
 <?php } ?>
 </table>
