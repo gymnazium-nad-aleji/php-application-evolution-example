@@ -1,4 +1,3 @@
-<?php
 /*
  * MIT License
  * Copyright (c) 2017 Vojtech Horky
@@ -22,45 +21,9 @@
  * SOFTWARE.
  */
 
-require_once 'data.php';
-
-/*
- * Check that the machine id is set and it is a valid entry.
- */
-$id = @$_GET['id'];
-if (!isset($MACHINES[$id])) {
-    Header("Location: index.php");
-    exit();
+BODY {
+    font-family: Verdana,Arial,sans-serif;
 }
-$info = $MACHINES[$id];
-?>
-<html>
-<head>
-<title><?php echo $id; ?></title>
-<link rel="stylesheet" type="text/css" href="main.css" />
-</head>
-
-<body>
-<h1><?php echo $id; ?></h1>
-
-<h2>Owner</h2>
-<p><?php echo $info['owner']; ?></p>
-
-<h2>Services</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>State</th>
-        <th>Events</th>
-    </tr>
-<?php foreach ($info['services'] as $srv => $details) { ?>
-    <tr>
-        <td><a href="service.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>"><?php echo $details['description']; ?></a></td>
-        <td><?php echo $details['state']; ?></td>
-        <td><a href="events.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>">View event log</a></td>
-    </tr>
-<?php } ?>
-</table>
-
-</body>
-</html>
+H1 {
+    text-align: center;
+}

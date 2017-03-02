@@ -27,6 +27,7 @@ require_once 'data.php';
 <html>
 <head>
 <title>Home</title>
+<link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 
 <body>
