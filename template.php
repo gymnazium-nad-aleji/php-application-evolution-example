@@ -22,40 +22,29 @@
  * SOFTWARE.
  */
 
-require_once 'data.php';
-require_once 'template.php';
 
-/*
- * Check that the machine id is set and it is a valid entry.
+/**
+ * Prints a page header - that is from the HTML prologue up to H1 title.
  */
-$id = @$_GET['id'];
-if (!isset($MACHINES[$id])) {
-    Header("Location: index.php");
-    exit();
-}
-$info = $MACHINES[$id];
-
-page_header($id);
+function page_header($title) {
 ?>
+<html>
+<head>
+<title><?php echo $title; ?></title>
+<link rel="stylesheet" type="text/css" href="main.css" />
+</head>
 
-<h2>Owner</h2>
-<p><?php echo $info['owner']; ?></p>
-
-<h2>Services</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>State</th>
-        <th>Events</th>
-    </tr>
-<?php foreach ($info['services'] as $srv => $details) { ?>
-    <tr>
-        <td><a href="service.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>"><?php echo $details['description']; ?></a></td>
-        <td><?php echo $details['state']; ?></td>
-        <td><a href="events.php?machine=<?php echo $id; ?>&amp;service=<?php echo $srv; ?>">View event log</a></td>
-    </tr>
-<?php } ?>
-</table>
-
+<body>
+<h1><?php echo $title; ?></h1>
 <?php
-page_footer();
+}
+
+/**
+ * Prints a page footer.
+ */
+function page_footer() {
+?>
+</body>
+</html>
+<?php
+}

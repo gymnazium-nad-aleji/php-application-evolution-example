@@ -23,15 +23,10 @@
  */
 
 require_once 'data.php';
-?>
-<html>
-<head>
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="main.css" />
-</head>
+require_once 'template.php';
 
-<body>
-<h1>Home</h1>
+page_header("Home");
+?>
 
 <ul>
 <?php
@@ -42,5 +37,5 @@ foreach ($MACHINES as $id => $info) {
 ?>
 </ul>
 
-</body>
-</html>
+<?php
+page_footer();
