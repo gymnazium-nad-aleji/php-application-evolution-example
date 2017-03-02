@@ -29,3 +29,4 @@
 require_once 'template.php';
 require_once 'utils.php';
 require_once 'data.php';
+require_once 'model.php';

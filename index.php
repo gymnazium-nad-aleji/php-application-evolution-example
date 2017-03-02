@@ -29,8 +29,9 @@ page_header("Home");
 
 <ul>
 <?php
-foreach ($MACHINES as $id => $info) {
-	?><li><?php echo make_link($id, 'machine.php', [ 'id' => $id]) ?></li>
+$machines = data_get_machine_list();
+foreach ($machines as $m) {
+	?><li><?php echo make_link($m, 'machine.php', [ 'id' => $m]) ?></li>
 <?php
 }
 ?>

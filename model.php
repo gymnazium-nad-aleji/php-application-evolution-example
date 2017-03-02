@@ -22,44 +22,21 @@
  * SOFTWARE.
  */
 
-require_once 'inc.php';
-
-/*
- * Retrieve machine information.
- * We suppress errors as $_GET['id'] might be undefined.
- */
-$info = @data_get_machine_details($_GET['id']);
-if ($info === false) {
-    Header("Location: index.php");
-    exit();
+function data_get_machine_list() {
+	global $MACHINES;
+	
+	return array_keys($MACHINES);
 }
 
-/*
- * Unlike $_GET['id'], this id is sanitized (e.g. no extra spaces) and
- * definitely okay.
- */
-$id = $info['id'];
-page_header($id);
-?>
-
-<h2>Owner</h2>
-<p><?php echo $info['owner']; ?></p>
-
-<h2>Services</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>State</th>
-        <th>Events</th>
-    </tr>
-<?php foreach ($info['services'] as $srv => $details) { ?>
-    <tr>
-        <td><?php echo make_link($details['description'], 'service.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
-        <td><?php echo $details['state']; ?></td>
-        <td><?php echo make_link('View event log', 'events.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
-    </tr>
-<?php } ?>
-</table>
-
-<?php
-page_footer();
+function data_get_machine_details($id) {
+	global $MACHINES;
+	
+	if (!isset($MACHINES[$id])) {
+		return false;
+	}
+	
+	$result = $MACHINES[$id];
+	$result["id"] = $id;
+	
+	return $result;
+}
