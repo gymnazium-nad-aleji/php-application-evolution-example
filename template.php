@@ -44,6 +44,7 @@ function page_header($title) {
  */
 function page_footer() {
 ?>
+<address>&copy; Me</address>
 </body>
 </html>
 <?php
