@@ -22,9 +22,7 @@
  * SOFTWARE.
  */
 
-require_once 'data.php';
-require_once 'utils.php';
-require_once 'template.php';
+require_once 'inc.php';
 
 page_header("Home");
 ?>

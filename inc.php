@@ -22,39 +22,10 @@
  * SOFTWARE.
  */
 
-require_once 'inc.php';
-
 /*
- * Check that the machine id is set and it is a valid entry.
+ * This is a common include file for easier maintenance.
  */
-$id = @$_GET['id'];
-if (!isset($MACHINES[$id])) {
-    Header("Location: index.php");
-    exit();
-}
-$info = $MACHINES[$id];
 
-page_header($id);
-?>
-
-<h2>Owner</h2>
-<p><?php echo $info['owner']; ?></p>
-
-<h2>Services</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>State</th>
-        <th>Events</th>
-    </tr>
-<?php foreach ($info['services'] as $srv => $details) { ?>
-    <tr>
-        <td><?php echo make_link($details['description'], 'service.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
-        <td><?php echo $details['state']; ?></td>
-        <td><?php echo make_link('View event log', 'events.php', [ 'machine' => $id, 'service' => $srv]); ?></td>
-    </tr>
-<?php } ?>
-</table>
-
-<?php
-page_footer();
+require_once 'template.php';
+require_once 'utils.php';
+require_once 'data.php';
