@@ -22,11 +22,37 @@
  * SOFTWARE.
  */
 
-/*
- * This is a common include file for easier maintenance.
- */
 
-require_once 'template.php';
-require_once 'utils.php';
-require_once 'data.php';
-require_once 'model.php';
+/**
+ * Creates HTML link.
+ * 
+ * make_link($text, $page)
+ * 
+ * @param $text The clickable text of the link.
+ * @param $page Target page (e.g. 'machine', 'alpha', 'service', 'srv').
+ */
+function make_link($params = null) {
+    $params = func_get_args();
+    $name = array_shift($params);
+    $url = call_user_func_array('url_for', $params);
+    
+    return sprintf('<a href="%s">%s</a>', $url, $name);
+}
+
+/**
+ * Format all flashes (e.g. message from previous page).
+ */
+function flash_format_all() {
+    $names = [ 'error', 'info' ];
+    
+    $result = "";
+    
+    foreach ($names as $a) {
+        $fl = flash_now($a);
+        if ($fl != null) {
+            $result .= sprintf("<div class=\"%s\">%s</div>\n", $a, $fl);
+        }
+    }
+    
+    return $result;
+}

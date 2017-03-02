@@ -22,25 +22,13 @@
  * SOFTWARE.
  */
 
-/*
- * Central script for our application.
- * 
- * We include Limonade and our scripts, set-up the flashes, layout, routes
- * and run the application.
+
+/**
+ * Displays homepage of our application.
  */
-
-require_once 'lib/limonade.php';
-require_once 'lib/inc.php';
-
-function before($route) {
-	set('glob_flash', flash_format_all());
+function page_index() {
+    set('title', 'Home');
+    set('machines', data_get_machine_list());
+    
+    return html('home.html.php');
 }
-
-session_start();
-
-layout('layout/default.html.php');
-
-dispatch('/', 'page_index');
-dispatch('/machine/:machine', 'page_machine_index');
-
-run();

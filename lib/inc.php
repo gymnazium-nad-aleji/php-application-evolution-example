@@ -22,30 +22,10 @@
  * SOFTWARE.
  */
 
-
-/**
- * Prints a page header - that is from the HTML prologue up to H1 title.
+/*
+ * This is a common include file for easier maintenance.
  */
-function page_header($title) {
-?>
-<html>
-<head>
-<title><?php echo $title; ?></title>
-<link rel="stylesheet" type="text/css" href="main.css" />
-</head>
 
-<body>
-<h1><?php echo $title; ?></h1>
-<?php
-}
-
-/**
- * Prints a page footer.
- */
-function page_footer() {
-?>
-<address>&copy; Me</address>
-</body>
-</html>
-<?php
-}
+require_once 'utils.php';
+require_once 'data.php';
+require_once 'model.php';

@@ -22,21 +22,40 @@
  * SOFTWARE.
  */
 
-
-/**
- * Creates HTML link.
- * 
- * Example: to create <a href="machine.php?id=alpha&style=blue">Alpha</a>, call
- * make_link("Alpha", "machine.php", [ "id" => "alpha", "style" => "blue" ]);
- * 
- * @param $text The clickable text of the link.
- * @param $page Target page.
- * @param $params Array of query parameters for the page.
+/*
+ * This is the default layout (top-level template) for the whole application.
  */
-function make_link($text, $page, $params) {
-    $p = array();
-    foreach ($params as $key => $value) {
-        $p[] = $key . '=' . $value;
-    }
-    return sprintf('<a href="%s?%s">%s</a>', $page, implode('&amp;', $p), $text);
-}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title><?php echo htmlspecialchars($title);  ?></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="main.css" />
+	</head>
+<body>
+<h1><?php echo htmlspecialchars($title);  ?></h1>
+
+<?php
+/*
+ * Display so-called flashes - messages from the previous page
+ * (before call to redirect_to).
+ */
+if (@$glob_flash != "") { ?>
+<div id="flashes">
+<?php echo $glob_flash;  ?>
+</div>
+<?php } ?>
+
+<?php
+/*
+ * Actual content of the page (as set-up by individual functions
+ * in controllers).
+ */
+echo $content;
+?>
+
+<address>&copy; Me</address>
+
+</body>
+</html>

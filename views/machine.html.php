@@ -21,26 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+?>
+<h2>Owner</h2>
+<p><?php echo $owner; ?></p>
 
-/*
- * Central script for our application.
- * 
- * We include Limonade and our scripts, set-up the flashes, layout, routes
- * and run the application.
- */
-
-require_once 'lib/limonade.php';
-require_once 'lib/inc.php';
-
-function before($route) {
-	set('glob_flash', flash_format_all());
-}
-
-session_start();
-
-layout('layout/default.html.php');
-
-dispatch('/', 'page_index');
-dispatch('/machine/:machine', 'page_machine_index');
-
-run();
+<h2>Services</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>State</th>
+    </tr>
+<?php foreach ($services as $srv => $details) { ?>
+    <tr>
+        <td><?php echo make_link($details['description'], 'machine', $machine, 'service', $srv); ?></td>
+        <td><?php echo $details['state']; ?></td>
+    </tr>
+<?php } ?>
+</table>

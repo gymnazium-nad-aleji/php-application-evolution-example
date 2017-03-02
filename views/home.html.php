@@ -21,26 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+?>
 
-/*
- * Central script for our application.
- * 
- * We include Limonade and our scripts, set-up the flashes, layout, routes
- * and run the application.
- */
-
-require_once 'lib/limonade.php';
-require_once 'lib/inc.php';
-
-function before($route) {
-	set('glob_flash', flash_format_all());
+<ul>
+<?php
+foreach ($machines as $m) {
+	?><li><?php echo make_link($m, 'machine', $m); ?></li>
+<?php
 }
-
-session_start();
-
-layout('layout/default.html.php');
-
-dispatch('/', 'page_index');
-dispatch('/machine/:machine', 'page_machine_index');
-
-run();
+?>
+</ul>
