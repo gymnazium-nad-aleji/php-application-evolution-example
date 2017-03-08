@@ -30,3 +30,8 @@ H1 {
 ADDRESS {
     margin-top: 2em;
 }
+TABLE, TD, TH {
+     border: 1px solid black;
+     border-collapse: collapse;
+     padding: 0.5ex;
+}

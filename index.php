@@ -36,11 +36,19 @@ function before($route) {
 	set('glob_flash', flash_format_all());
 }
 
+function configure() {
+	$db = new PDO('sqlite:db/db.sqlite');
+
+	option('db', $db);
+}
+
 session_start();
 
 layout('layout/default.html.php');
 
 dispatch('/', 'page_index');
+dispatch('/sql', 'page_sql');
+dispatch_post('/sql', 'page_sql');
 dispatch('/machine/:machine', 'page_machine_index');
 
 run();
