@@ -37,9 +37,7 @@ function before($route) {
 }
 
 function configure() {
-	$db = new PDO('sqlite:db/db.sqlite');
-
-	option('db', $db);
+	db_init('sqlite:db/db.sqlite');
 }
 
 session_start();

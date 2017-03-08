@@ -31,10 +31,10 @@
         <th>Name</th>
         <th>State</th>
     </tr>
-<?php foreach ($services as $srv => $details) { ?>
+<?php foreach ($services as $srv) { ?>
     <tr>
-        <td><?php echo make_link($details['description'], 'machine', $machine, 'service', $srv); ?></td>
-        <td><?php echo $details['state']; ?></td>
+        <td><?php echo make_link($srv['description'], 'machine', $machine, 'service', $srv['id']); ?></td>
+        <td><?php echo $srv['state']; ?></td>
     </tr>
 <?php } ?>
 </table>

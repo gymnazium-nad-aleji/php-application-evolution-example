@@ -33,9 +33,9 @@ function page_machine_index() {
         redirect_to('/');
     }
     
-    set('title', $info['id']);
-    set('machine', $info['id']);
-    set('owner', $info['owner']);
+    set('title', $info['hostname']);
+    set('machine', $info['hostname']);
+    set('owner', $info['owner']['name']);
     set('services', $info['services']);
     
     return html('machine.html.php');

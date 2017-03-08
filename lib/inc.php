@@ -27,5 +27,5 @@
  */
 
 require_once 'utils.php';
-require_once 'data.php';
+require_once 'db.php';
 require_once 'model.php';

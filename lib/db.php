@@ -22,35 +22,56 @@
  * SOFTWARE.
  */
 
+/**
+ * Initializes database connection.
+ */
+function db_init($connection_string) {
+    $db = new PDO($connection_string);
+    
+    option('db', $db);
+}
 
-function data_get_machine_list() {
-    $machines = db_find_objects("get all machines",
-        'SELECT hostname FROM machine');
+/**
+ * Retrieve multiple results from the database.
+ *
+ * @param $description Query description, currently not used.
+ * @param $sql SQL query with placeholders.
+ * @param $params Actual parameters for the SQL query.
+ */
+function db_find_objects($description, $sql, $params = array()) {
+    $conn = option('db');
     
     $result = [ ];
-    foreach ( $machines as $m ) {
-        $result [] = $m ['hostname'];
+    
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute($params)) {
+        while ( $obj = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+            $result [] = $obj;
+        }
     }
     
     return $result;
 }
 
-
-function data_get_machine_details($hostname) {
-    $info = db_find_object("get machine details",
-	   'SELECT id, hostname, owner FROM machine WHERE hostname=:hostname',
-       [ 'hostname' => $hostname ]);
-    if ($info == null) {
-        return false;
+/**
+ * Retrieve single result from the database.
+ *
+ * @param $description Query
+ *            description, currently not used.
+ * @param $sql SQL
+ *            query with placeholders.
+ * @param $params Actual
+ *            parameters for the SQL query.
+ */
+function db_find_object($description, $sql, $params = array()) {
+    $conn = option('db');
+    
+    $result = null;
+    
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute($params)) {
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    $info['owner'] = db_find_object("get machine owner",
-       'SELECT name, email FROM user WHERE id = :user',
-       [ 'user' => $info['owner'] ]);
-	
-    $info['services'] = db_find_objects("get machine services",
-       'SELECT id, name description, state FROM service WHERE machine = :machine',
-       [ 'machine' => $info['id'] ]);
-    
-    return $info;
+    return $result;
 }

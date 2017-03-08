@@ -6,7 +6,7 @@ CREATE TABLE user (
 
 CREATE TABLE machine (
     `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    `hostname` TEXT NOT NULL,
+    `hostname` TEXT NOT NULL UNIQUE,
     `owner` INTEGER NOT NULL
 );
 
