@@ -22,23 +22,5 @@
  * SOFTWARE.
  */
 ?>
-
-<h2>Machines</h2>
-<ul>
-<?php
-foreach ($machines as $m) {
-	?><li><?php echo make_link($m, 'machine', $m); ?></li>
-<?php
-}
-?>
-</ul>
-
-<h2>Users</h2>
-<ul>
-<?php
-foreach ($users as $u) {
-	?><li><?php echo make_link($u['name'], 'user', $u['id']); ?></li>
-<?php
-}
-?>
-</ul>
+<h2>E-mail</h2>
+<p><?php echo $email; ?></p>

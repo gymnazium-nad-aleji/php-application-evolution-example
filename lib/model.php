@@ -54,3 +54,19 @@ function data_get_machine_details($hostname) {
     
     return $info;
 }
+
+function data_get_user_list() {
+    return db_find_objects("get all users",
+            'SELECT id, name FROM user');
+}
+
+function data_get_user_details($id) {
+    $info = db_find_object("get user details",
+            'SELECT id, name, email FROM user WHERE id=:id',
+            [ 'id' => $id ]);
+    if ($info == null) {
+        return false;
+    }
+    
+    return $info;
+}

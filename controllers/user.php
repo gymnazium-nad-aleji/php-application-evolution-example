@@ -21,24 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-?>
 
-<h2>Machines</h2>
-<ul>
-<?php
-foreach ($machines as $m) {
-	?><li><?php echo make_link($m, 'machine', $m); ?></li>
-<?php
-}
-?>
-</ul>
 
-<h2>Users</h2>
-<ul>
-<?php
-foreach ($users as $u) {
-	?><li><?php echo make_link($u['name'], 'user', $u['id']); ?></li>
-<?php
+/**
+ * Displays homepage of a specific user.
+ */
+function page_user_index() {
+    $info = data_get_user_details(params('user'));
+    if ($info === false) {
+        flash('error', 'Unknown user.');
+        redirect_to('/');
+    }
+    
+    set('title', $info['name']);
+    set('name', $info['name']);
+    set('email', $info['email']);
+    
+    return html('user.html.php');
 }
-?>
-</ul>

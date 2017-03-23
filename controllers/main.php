@@ -29,6 +29,7 @@
 function page_index() {
     set('title', 'Home');
     set('machines', data_get_machine_list());
+    set('users', data_get_user_list());
     
     return html('home.html.php');
 }
