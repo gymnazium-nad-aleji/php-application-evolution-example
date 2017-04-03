@@ -45,7 +45,7 @@ function data_get_machine_details($hostname) {
     }
     
     $info['owner'] = db_find_object("get machine owner",
-       'SELECT name, email FROM user WHERE id = :user',
+       'SELECT id, name, email FROM user WHERE id = :user',
        [ 'user' => $info['owner'] ]);
 	
     $info['services'] = db_find_objects("get machine services",
