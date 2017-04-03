@@ -40,3 +40,63 @@ function page_machine_index() {
     
     return html('machine.html.php');
 }
+
+function page_machine_edit() {
+    $info = data_get_machine_details(params('machine'));
+    if ($info === false) {
+        flash('error', 'Unknown machine.');
+        redirect_to('/');
+    }
+    
+    set('title', $info['hostname']);
+    set('machine', $info['hostname']);
+    set('owners', data_get_user_list());
+    
+    
+    if (!isset($_POST['f_sent'])) {
+        // Form was not sent, fill-in current values.
+        set('f_hostname', $info['hostname']);
+        set('e_hostname', '');
+        set('f_owner', $info['owner']['id']);
+        set('e_owner', '');
+    } else {
+        // Set missing fields as empty.
+        foreach (['f_hostname', 'f_owner'] as $i) {
+            if (!isset($_POST[$i])) {
+                $_POST[$i] = '';
+            }
+        }
+        
+        // Fill-in sent values (prevent loosing data).
+        set('f_hostname', $_POST['f_hostname']);
+        set('e_hostname', '');
+        set('f_owner', $_POST['f_owner']);
+        set('e_owner', '');
+        
+        
+        // Check input data
+        $everything_ok = true;
+        
+        if (preg_match('/^[-_.a-zA-Z0-9]+$/', $_POST['f_hostname']) !== 1) {
+            $everything_ok = false;
+            set('e_hostname', 'invalid hostname');
+        }
+        
+        if (data_get_user_details($_POST['f_owner']) === false) {
+            $everything_ok = false;
+            set('e_owner', 'unknown owner selected');
+        }
+        
+        if ($everything_ok) {
+            data_update_machine_details($info['id'], [
+                'hostname' => $_POST['f_hostname'],
+                'owner' => $_POST['f_owner']
+            ]);
+            
+            flash('info', 'Entry updated.');
+            redirect_to('/');
+        }
+    }
+    
+    return html('machine_edit.html.php');
+}

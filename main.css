@@ -35,3 +35,6 @@ TABLE, TD, TH {
      border-collapse: collapse;
      padding: 0.5ex;
 }
+SPAN.error {
+     color: #cc0000;
+}

@@ -21,51 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-
-/**
- * Creates HTML link.
- * 
- * make_link($text, $page)
- * 
- * @param $text The clickable text of the link.
- * @param $page Target page (e.g. 'machine', 'alpha', 'service', 'srv').
- */
-function make_link($params = null) {
-    $params = func_get_args();
-    $name = array_shift($params);
-    $url = call_user_func_array('url_for', $params);
-    
-    return sprintf('<a href="%s">%s</a>', $url, $name);
-}
-
-/**
- * Format all flashes (e.g. message from previous page).
- */
-function flash_format_all() {
-    $names = [ 'error', 'info' ];
-    
-    $result = "";
-    
-    foreach ($names as $a) {
-        $fl = flash_now($a);
-        if ($fl != null) {
-            $result .= sprintf("<div class=\"%s\">%s</div>\n", $a, $fl);
-        }
-    }
-    
-    return $result;
-}
-
-/**
- * Format error message in a form.
- * 
- * @param $message Error message (empty means no error).
- */
-function format_form_error($message) {
-    if (empty($message)) {
-        return "";
-    }
-    
-    return sprintf(' <span class="error">(Error: %s.)</a>', $message);
-}
+?>
+<form method="post" action="<?php echo url_for('machine', $machine, 'edit'); ?>">
+<fieldset>
+    <legend>Edit machine ...</legend>
+    <input type="hidden" name="f_sent" value="sent" />
+    <dl>
+        <dt><label for="f_hostname">Hostname</label><?php echo format_form_error($e_hostname); ?></dt>
+        <dd><input type="text" id="f_hostname" name="f_hostname" value="<?php echo htmlspecialchars($f_hostname); ?>" />
+        <dt><label for="f_owner">Owner</label><?php echo format_form_error($e_owner); ?></dt>
+        <dd>
+            <select id="f_owner" name="f_owner">
+            <?php
+                foreach ($owners as $o) {
+                    printf("                <option value=\"%s\"%s>%s</option>\n",
+                        htmlspecialchars($o['id']),
+                        $o['id'] == $f_owner ? ' selected="selected"' : '',
+                        htmlspecialchars($o['name']));
+                }
+            ?>
+            </select>
+        <dt><input type="submit" value="Update ..." />
+    </dl>
+</fieldset>
+</form>

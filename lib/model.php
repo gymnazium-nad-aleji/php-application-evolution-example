@@ -55,6 +55,14 @@ function data_get_machine_details($hostname) {
     return $info;
 }
 
+
+function data_update_machine_details($id, $updates) {
+    $updates['id'] = $id;
+    db_update_object_from_array("update machine",
+         $updates, 'machine',
+         [ 'id']);
+}
+
 function data_get_user_list() {
     return db_find_objects("get all users",
             'SELECT id, name FROM user');

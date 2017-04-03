@@ -38,3 +38,5 @@
     </tr>
 <?php } ?>
 </table>
+
+<p><?php echo make_link("Edit ...", 'machine', $machine, 'edit'); ?></p>

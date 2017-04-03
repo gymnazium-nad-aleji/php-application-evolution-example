@@ -48,6 +48,8 @@ dispatch('/', 'page_index');
 dispatch('/sql', 'page_sql');
 dispatch_post('/sql', 'page_sql');
 dispatch('/machine/:machine', 'page_machine_index');
+dispatch('/machine/:machine/edit', 'page_machine_edit');
+dispatch_post('/machine/:machine/edit', 'page_machine_edit');
 dispatch('/user/:user', 'page_user_index');
 
 run();
