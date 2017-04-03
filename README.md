@@ -5,6 +5,9 @@ This repository demonstrates how a typical PHP application evolves.
 Starting from multiple stand-alone pages to a MVC-based system using
 [Limonade PHP](https://limonade-php.github.io/).
 
+The application also uses [Zebra_Form](http://stefangabos.ro/php-libraries/zebra-form/)
+to validate and render input forms.
+
 How to run
 ----------
 

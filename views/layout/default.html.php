@@ -32,6 +32,9 @@
 		<title><?php echo htmlspecialchars($title);  ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="main.css" />
+		<link rel="stylesheet" type="text/css" href="css/zebra_form.css" />
+		<script type="text/javascript" language="JavaScript" src="js/jquery-3.2.0.min.js"></script>
+		<script type="text/javascript" language="JavaScript" src="js/zebra_form.js"></script>
 	</head>
 <body>
 <h1><?php echo htmlspecialchars($title);  ?></h1>
