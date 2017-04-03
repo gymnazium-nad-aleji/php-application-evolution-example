@@ -137,7 +137,7 @@ function db_update_object_from_array($description, $object_array, $table, $id_co
             $table, implode(', ', $columns_assignments),
             implode(' AND ', $id_columns_comparison));
 
-    $conn = option('db_conn');
+    $conn = option('db');
     $stmt = $conn->prepare($sql);
     foreach ($columns as $c) {
         $stmt->bindValue(':' . $c, $object_array[$c]);
@@ -158,7 +158,7 @@ function db_delete_objects($description, $table, $conditions) {
     $sql = sprintf("DELETE FROM `%s` WHERE %s",
             $table, implode(' AND ', $comparisons));
 
-    $conn = option('db_conn');
+    $conn = option('db');
     $stmt = $conn->prepare($sql);
     foreach ($conditions as $key => $value) {
         $stmt->bindValue(':' . $key, $value);
