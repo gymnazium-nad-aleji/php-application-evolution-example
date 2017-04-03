@@ -22,26 +22,6 @@
  * SOFTWARE.
  */
 ?>
-<form method="post" action="<?php echo url_for('machine', $machine, 'edit'); ?>">
-<fieldset>
-    <legend>Edit machine ...</legend>
-    <input type="hidden" name="f_sent" value="sent" />
-    <dl>
-        <dt><label for="f_hostname">Hostname</label><?php echo format_form_error($e_hostname); ?></dt>
-        <dd><input type="text" id="f_hostname" name="f_hostname" value="<?php echo htmlspecialchars($f_hostname); ?>" />
-        <dt><label for="f_owner">Owner</label><?php echo format_form_error($e_owner); ?></dt>
-        <dd>
-            <select id="f_owner" name="f_owner">
-            <?php
-                foreach ($owners as $o) {
-                    printf("                <option value=\"%s\"%s>%s</option>\n",
-                        htmlspecialchars($o['id']),
-                        $o['id'] == $f_owner ? ' selected="selected"' : '',
-                        htmlspecialchars($o['name']));
-                }
-            ?>
-            </select>
-        <dt><input type="submit" value="Update ..." />
-    </dl>
-</fieldset>
-</form>
+<?php 
+echo $form;
+?>

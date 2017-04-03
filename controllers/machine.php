@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+require_once('lib/Zebra_Form.php');
+
 
 /**
  * Displays homepage of a specific machine.
@@ -48,55 +50,62 @@ function page_machine_edit() {
         redirect_to('/');
     }
     
+    $all_owners = data_get_user_list();
+    
     set('title', $info['hostname']);
     set('machine', $info['hostname']);
-    set('owners', data_get_user_list());
     
+    // Create the form.
+    $form = new Zebra_Form('myform');
+    $form->clientside_validation([
+        'close_tips' => true,
+        'on_ready' => false,
+        'disable_upload_validation' => true,
+        'scroll_to_error' => false,
+        'tips_position' => 'right',
+        'validate_on_the_fly' => true,
+        'validate_all' => true,
+    ]);
     
-    if (!isset($_POST['f_sent'])) {
-        // Form was not sent, fill-in current values.
-        set('f_hostname', $info['hostname']);
-        set('e_hostname', '');
-        set('f_owner', $info['owner']['id']);
-        set('e_owner', '');
-    } else {
-        // Set missing fields as empty.
-        foreach (['f_hostname', 'f_owner'] as $i) {
-            if (!isset($_POST[$i])) {
-                $_POST[$i] = '';
-            }
-        }
-        
-        // Fill-in sent values (prevent loosing data).
-        set('f_hostname', $_POST['f_hostname']);
-        set('e_hostname', '');
-        set('f_owner', $_POST['f_owner']);
-        set('e_owner', '');
-        
-        
-        // Check input data
-        $everything_ok = true;
-        
-        if (preg_match('/^[-_.a-zA-Z0-9]+$/', $_POST['f_hostname']) !== 1) {
-            $everything_ok = false;
-            set('e_hostname', 'invalid hostname');
-        }
-        
-        if (data_get_user_details($_POST['f_owner']) === false) {
-            $everything_ok = false;
-            set('e_owner', 'unknown owner selected');
-        }
-        
-        if ($everything_ok) {
-            data_update_machine_details($info['id'], [
-                'hostname' => $_POST['f_hostname'],
-                'owner' => $_POST['f_owner']
-            ]);
-            
-            flash('info', 'Entry updated.');
-            redirect_to('/');
-        }
+    // Hostname field.
+    $form->add('label', 'label_hostname', 'hostname', 'Hostname');
+    $f_hostname = $form->add('text', 'hostname', $info['hostname']);
+    $f_hostname->set_rule([
+        'required' => [ 'error', 'Hostname cannot be empty.' ],
+        'regexp' =>  [ '^[-_.a-zA-Z0-9]+$', 'error', 'Invalid hostname.' ]
+    ]);
+    
+    // Owner field.
+    $form->add('label', 'label_owner', 'owner', 'Owner');
+    $f_owner = $form->add('select', 'owner', $info['owner']['id']);
+    foreach ($all_owners as $o) {
+        $f_owner->add_options([
+            $o['id'] => $o['name']
+        ]);
     }
+    $f_owner->set_rule([
+        'required' => [ 'error', 'Owner must be set.' ]
+    ]);
+    
+    // Submit button.
+    $form->add('submit', 'submitbtn', 'Update ...');
+    
+    
+    // If the form was submitted and data are okay, update the entry
+    // in the database and redirect to homepage.
+    // Otherwise, display the form again.
+    if ($form->validate()) {
+        data_update_machine_details($info['id'], [
+            'hostname' => $_POST['hostname'],
+            'owner' => $_POST['owner']
+        ]);
+        
+        flash('info', 'Entry updated.');
+        redirect_to('/');
+    }
+    
+    
+    set('form', $form->render('', true));
     
     return html('machine_edit.html.php');
 }
